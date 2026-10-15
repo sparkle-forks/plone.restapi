@@ -1637,7 +1637,7 @@ class TestUsersEndpoint(unittest.TestCase):
             },
         )
         self.assertTrue(anon_response.ok)
-        auth_token = anon_response.json().get("token")
+        auth_token = anon_response.json().get("access_token")
 
         user_api_session = RelativeSession(self.portal_url, test=self)
         user_api_session.headers.update({"Accept": "application/json"})
@@ -1756,7 +1756,7 @@ class TestUsersEndpoint(unittest.TestCase):
             },
         )
         self.assertTrue(anon_response.ok)
-        auth_token = anon_response.json().get("token")
+        auth_token = anon_response.json().get("access_token")
 
         user_api_session = RelativeSession(self.portal_url, test=self)
         user_api_session.headers.update({"Accept": "application/json"})
@@ -1894,7 +1894,7 @@ class TestUsersEndpoint(unittest.TestCase):
             },
         )
         self.assertTrue(anon_response.ok)
-        auth_token = anon_response.json().get("token")
+        auth_token = anon_response.json().get("access_token")
 
         user_api_session = RelativeSession(self.portal_url, test=self)
         user_api_session.headers.update({"Accept": "application/json"})
