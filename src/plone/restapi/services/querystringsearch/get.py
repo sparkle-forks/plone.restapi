@@ -17,11 +17,7 @@ PATH_DEPTH_SUFFIX = re.compile(r"::\d+$")
 
 
 def _drop_path_depth(value):
-    """Strip a trailing ``::depth`` suffix from a path criterion value.
-
-    Volto encodes listing depth as ``{path}::{depth}``. Dropping it keeps the
-    ``{i, o, v}`` request shape but searches the whole subtree.
-    """
+    """Remove a trailing ``::123`` suffix from path values if it is present."""
     if isinstance(value, str):
         return PATH_DEPTH_SUFFIX.sub("", value)
     if isinstance(value, list):

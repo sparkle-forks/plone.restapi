@@ -271,8 +271,6 @@ class TestQuerystringSearchEndpoint(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         titles = {item["title"] for item in response.json()["items"]}
-        # Depth 1 would exclude Nested Document. Stripping ::1 searches the
-        # whole subtree, which is the Volto listing-block break.
         self.assertIn("Nested Document", titles)
         self.assertIn("Child Document", titles)
 
