@@ -779,7 +779,7 @@ class TestDocumentation(TestDocumentationBase):
             f"{self.portal.absolute_url()}/@login",
             json={"login": SITE_OWNER_NAME, "password": SITE_OWNER_PASSWORD},
         )
-        token = json.loads(response.content)["token"]
+        token = json.loads(response.content)["access_token"]
         response = self.api_session.get(
             "/", headers={"Authorization": f"Bearer {token}"}
         )
@@ -795,7 +795,7 @@ class TestDocumentation(TestDocumentationBase):
             f"{self.portal.absolute_url()}/@login",
             json={"login": SITE_OWNER_NAME, "password": SITE_OWNER_PASSWORD},
         )
-        token = json.loads(response.content)["token"]
+        token = json.loads(response.content)["access_token"]
         response = self.api_session.post(
             f"{self.portal.absolute_url()}/@login-renew",
             headers={"Authorization": f"Bearer {token}"},
@@ -813,7 +813,7 @@ class TestDocumentation(TestDocumentationBase):
             f"{self.portal.absolute_url()}/@login",
             json={"login": SITE_OWNER_NAME, "password": SITE_OWNER_PASSWORD},
         )
-        token = json.loads(response.content)["token"]
+        token = json.loads(response.content)["access_token"]
         response = self.api_session.post(
             f"{self.portal.absolute_url()}/@logout",
             headers={"Authorization": f"Bearer {token}"},

@@ -82,7 +82,7 @@ class Login(Service):
 
         payload = {}
         payload["fullname"] = user.getProperty("fullname")
-        return {"token": plugin.create_token(user.getId(), data=payload)}
+        return {"access_token": plugin.create_token(user.getId(), data=payload)}
 
     def _find_userfolder(self, userid):
         """Try to find a user folder that contains a user with the given

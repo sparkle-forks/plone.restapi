@@ -59,7 +59,8 @@ class TestFunctionalAuth(unittest.TestCase):
             json={"login": TEST_USER_NAME, "password": TEST_USER_PASSWORD},
         )
         self.assertEqual(200, response.status_code)
-        self.assertIn("token", response.json())
+        self.assertIn("access_token", response.json())
+        self.assertNotIn("token", response.json())
 
     def test_api_login_grants_zmi(self):
         """
@@ -92,7 +93,7 @@ class TestFunctionalAuth(unittest.TestCase):
             "Wrong API login response status code",
         )
         self.assertIn(
-            "token",
+            "access_token",
             login_resp.json(),
             "Authentication token missing from API response JSON",
         )
@@ -238,7 +239,7 @@ class TestFunctionalAuth(unittest.TestCase):
             headers={"Accept": "application/json"},
             json={"login": TEST_USER_NAME, "password": TEST_USER_PASSWORD},
         )
-        valid_token = response.json().get("token")
+        valid_token = response.json().get("access_token")
 
         # use valid token to access a private resource
         response = requests.get(

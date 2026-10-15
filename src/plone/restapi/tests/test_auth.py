@@ -34,12 +34,14 @@ class TestLogin(TestCase):
         service = self.traverse()
         res = service.reply()
         self.assertIn("error", res)
+        self.assertNotIn("access_token", res)
         self.assertNotIn("token", res)
 
     def test_login_without_credentials_fails(self):
         service = self.traverse()
         res = service.reply()
         self.assertIn("error", res)
+        self.assertNotIn("access_token", res)
         self.assertNotIn("token", res)
 
     def test_login_with_invalid_credentials_fails(self):
@@ -47,6 +49,7 @@ class TestLogin(TestCase):
         service = self.traverse()
         res = service.reply()
         self.assertIn("error", res)
+        self.assertNotIn("access_token", res)
         self.assertNotIn("token", res)
 
     def test_successful_login_returns_token(self):
@@ -57,7 +60,8 @@ class TestLogin(TestCase):
         service = self.traverse()
         res = service.reply()
         self.assertEqual(200, self.request.response.getStatus())
-        self.assertIn("token", res)
+        self.assertIn("access_token", res)
+        self.assertNotIn("token", res)
 
     def test_invalid_token_returns_400(self):
         invalid_token = "abc123"
@@ -78,7 +82,8 @@ class TestLogin(TestCase):
         )
         service = self.traverse()
         res = service.render()
-        self.assertIn("token", res)
+        self.assertIn("access_token", res)
+        self.assertNotIn("token", res)
 
     def test_login_with_zope_user_fails_without_pas_plugin(self):
         uf = self.layer["app"].acl_users
@@ -94,6 +99,7 @@ class TestLogin(TestCase):
         self.assertEqual(
             "JWT authentication plugin not installed.", res["error"]["message"]
         )
+        self.assertNotIn("access_token", res)
         self.assertNotIn("token", res)
 
     def test_login_with_zope_user(self):
@@ -106,7 +112,8 @@ class TestLogin(TestCase):
         service = self.traverse()
         res = service.reply()
         self.assertEqual(200, self.request.response.getStatus())
-        self.assertIn("token", res)
+        self.assertIn("access_token", res)
+        self.assertNotIn("token", res)
 
 
 class TestLogout(TestCase):

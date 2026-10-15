@@ -57,7 +57,7 @@ A JWT token can be acquired by posting a user's credentials to the `@login` endp
     :request: ../../../src/plone/restapi/tests/http-examples/jwt_login.req
 ```
 
-The server responds with a JSON object containing the token:
+The server responds with a JSON object containing the JWT in `access_token`. Volto still reads `token`, so this login response is not usable by current Volto clients:
 
 ```{literalinclude} ../../../src/plone/restapi/tests/http-examples/jwt_login.resp
 :language: http
