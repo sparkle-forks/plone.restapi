@@ -243,6 +243,37 @@ class TestQuerystringSearchEndpoint(unittest.TestCase):
             f"{self.portal.absolute_url()}/testdocument2",
         )
 
+    def test_querystringsearch_path_depth_suffix_is_ignored(self):
+        self.portal.invokeFactory("Folder", "listing-root", title="Listing Root")
+        root = self.portal["listing-root"]
+        root.invokeFactory("Document", "child", title="Child Document")
+        root.invokeFactory("Folder", "sub", title="Subfolder")
+        root["sub"].invokeFactory("Document", "nested", title="Nested Document")
+        transaction.commit()
+
+        response = self.api_session.post(
+            "/@querystring-search",
+            json={
+                "query": [
+                    {
+                        "i": "path",
+                        "o": "plone.app.querystring.operation.string.path",
+                        "v": "/plone/listing-root::1",
+                    },
+                    {
+                        "i": "portal_type",
+                        "o": "plone.app.querystring.operation.selection.any",
+                        "v": ["Document"],
+                    },
+                ]
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        titles = {item["title"] for item in response.json()["items"]}
+        self.assertIn("Nested Document", titles)
+        self.assertIn("Child Document", titles)
+
     def test_querystringsearch_sort(self):
         # id: testdocument1, title: Test I Document 1
         # id: testdocument2, title: Test H Document 2

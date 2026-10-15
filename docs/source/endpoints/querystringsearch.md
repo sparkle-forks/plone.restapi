@@ -301,7 +301,7 @@ The computed path can be stored:
 }
 ```
 
-The path can contain a depth parameter that is separated with `::`:
+If the path has a `::` suffix we just use the path part:
 
 ```
 {
