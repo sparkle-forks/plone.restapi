@@ -301,7 +301,7 @@ The computed path can be stored:
 }
 ```
 
-The path can contain a depth parameter that is separated with `::`:
+A trailing `::depth` suffix on a path value is ignored. The search uses the path without a depth limit:
 
 ```
 {
@@ -314,6 +314,8 @@ The path can contain a depth parameter that is separated with `::`:
   ]
 }
 ```
+
+Volto listing, search, and collection blocks encode depth as `{path}::{depth}`. Those queries now return the whole subtree.
 
 ##### Type
 

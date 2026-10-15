@@ -1,0 +1,1 @@
+`@querystring-search` now strips `::depth` from path criteria before running the query. Volto listing, search, and collection blocks that rely on `{path}::{depth}` return the whole subtree instead of a bounded listing. @sparkle

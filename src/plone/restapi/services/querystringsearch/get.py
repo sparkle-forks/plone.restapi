@@ -11,6 +11,33 @@ from zExceptions import BadRequest
 from zope.component import getMultiAdapter
 
 import packaging.version
+import re
+
+PATH_DEPTH_SUFFIX = re.compile(r"::\d+$")
+
+
+def _drop_path_depth(value):
+    """Strip a trailing ``::depth`` suffix from a path criterion value.
+
+    Volto encodes listing depth as ``{path}::{depth}``. Dropping it keeps the
+    ``{i, o, v}`` request shape but searches the whole subtree.
+    """
+    if isinstance(value, str):
+        return PATH_DEPTH_SUFFIX.sub("", value)
+    if isinstance(value, list):
+        return [_drop_path_depth(item) for item in value]
+    return value
+
+
+def _strip_path_depth_from_query(query):
+    normalized = []
+    for criterion in query:
+        item = dict(criterion)
+        if item.get("i") == "path":
+            item["v"] = _drop_path_depth(item.get("v"))
+        normalized.append(item)
+    return normalized
+
 
 zcatalog_version = distribution("Products.ZCatalog").version
 if packaging.version.parse(zcatalog_version) >= packaging.version.parse("5.1"):
@@ -49,6 +76,8 @@ class QuerystringSearch:
 
         if not query:
             raise BadRequest("No query supplied")
+
+        query = _strip_path_depth_from_query(query)
 
         if sort_order:
             sort_order = "descending" if sort_order == "descending" else "ascending"
