@@ -51,7 +51,7 @@ You can make a `GET` request for a content item, and include parameters to reque
     :request: ../../../src/plone/restapi/tests/http-examples/inherit_expansion.req
 ```
 
-The response will include data from the `@inherit` endpoint within the `@components` property:
+The response will include data from the `@inherit` endpoint within the `components` property:
 
 ```{literalinclude} ../../../src/plone/restapi/tests/http-examples/inherit_expansion.resp
 :language: http

@@ -2,7 +2,7 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 
 {
-    "@components": {
+    "components": {
         "actions": {
             "@id": "http://localhost:55001/plone/collection/@actions"
         },
@@ -64,7 +64,7 @@ Content-Type: application/json
     "item_count": 30,
     "items": [
         {
-            "@components": {
+            "components": {
                 "actions": {
                     "@id": "http://localhost:55001/plone/front-page/@actions"
                 },
@@ -140,7 +140,7 @@ Content-Type: application/json
             "working_copy_of": null
         },
         {
-            "@components": {
+            "components": {
                 "actions": {
                     "@id": "http://localhost:55001/plone/doc1/@actions"
                 },
@@ -212,7 +212,7 @@ Content-Type: application/json
             "working_copy_of": null
         },
         {
-            "@components": {
+            "components": {
                 "actions": {
                     "@id": "http://localhost:55001/plone/doc2/@actions"
                 },

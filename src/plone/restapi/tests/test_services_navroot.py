@@ -58,7 +58,7 @@ class TestServicesNavroot(unittest.TestCase):
         )
         self.assertEqual(response.json()["@id"], self.portal_url + "/@navroot")
         # Some fields should be absent for performance reasons
-        self.assertNotIn("@components", response.json()["navroot"])
+        self.assertNotIn("components", response.json()["navroot"])
         self.assertNotIn("@items", response.json()["navroot"])
         self.assertNotIn("@items_total", response.json()["navroot"])
 
