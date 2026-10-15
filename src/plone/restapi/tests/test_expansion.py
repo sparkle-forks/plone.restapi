@@ -64,28 +64,28 @@ class TestExpansion(unittest.TestCase):
     def test_expansion_returns_collapsed_elements(self):
         request = TestRequest()
         self.assertEqual(
-            {"@components": {"bar": "collapsed", "foo": "collapsed"}},
+            {"components": {"bar": "collapsed", "foo": "collapsed"}},
             expandable_elements(None, request),
         )
 
     def test_expansion_returns_expanded_element(self):
         request = TestRequest(form={"expand": "foo"})
         self.assertEqual(
-            {"@components": {"bar": "collapsed", "foo": "expanded"}},
+            {"components": {"bar": "collapsed", "foo": "expanded"}},
             expandable_elements(None, request),
         )
 
     def test_expansion_returns_multiple_deprecated_commas_expanded_elements(self):
         request = TestRequest(form={"expand": "foo,bar"})
         self.assertEqual(
-            {"@components": {"bar": "expanded", "foo": "expanded"}},
+            {"components": {"bar": "expanded", "foo": "expanded"}},
             expandable_elements(None, request),
         )
 
     def test_expansion_returns_multiple_expanded_elements(self):
         request = TestRequest(form={"expand": ["foo", "bar"]})
         self.assertEqual(
-            {"@components": {"bar": "expanded", "foo": "expanded"}},
+            {"components": {"bar": "expanded", "foo": "expanded"}},
             expandable_elements(None, request),
         )
 
@@ -132,11 +132,11 @@ class TestExpansionFunctional(unittest.TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("object" in response.json()["@components"]["actions"])
-        self.assertTrue("object_buttons" in response.json()["@components"]["actions"])
-        self.assertTrue("portal_tabs" in response.json()["@components"]["actions"])
-        self.assertTrue("site_actions" in response.json()["@components"]["actions"])
-        self.assertTrue("user" in response.json()["@components"]["actions"])
+        self.assertTrue("object" in response.json()["components"]["actions"])
+        self.assertTrue("object_buttons" in response.json()["components"]["actions"])
+        self.assertTrue("portal_tabs" in response.json()["components"]["actions"])
+        self.assertTrue("site_actions" in response.json()["components"]["actions"])
+        self.assertTrue("user" in response.json()["components"]["actions"])
         self.assertEqual(
             [
                 {
@@ -154,7 +154,7 @@ class TestExpansionFunctional(unittest.TestCase):
                     "items": [],
                 },
             ],
-            response.json()["@components"]["navigation"]["items"],
+            response.json()["components"]["navigation"]["items"],
         )
 
     def test_expanded_as_list(self):
@@ -163,11 +163,11 @@ class TestExpansionFunctional(unittest.TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("object" in response.json()["@components"]["actions"])
-        self.assertTrue("object_buttons" in response.json()["@components"]["actions"])
-        self.assertTrue("portal_tabs" in response.json()["@components"]["actions"])
-        self.assertTrue("site_actions" in response.json()["@components"]["actions"])
-        self.assertTrue("user" in response.json()["@components"]["actions"])
+        self.assertTrue("object" in response.json()["components"]["actions"])
+        self.assertTrue("object_buttons" in response.json()["components"]["actions"])
+        self.assertTrue("portal_tabs" in response.json()["components"]["actions"])
+        self.assertTrue("site_actions" in response.json()["components"]["actions"])
+        self.assertTrue("user" in response.json()["components"]["actions"])
         self.assertEqual(
             [
                 {
@@ -185,30 +185,30 @@ class TestExpansionFunctional(unittest.TestCase):
                     "items": [],
                 },
             ],
-            response.json()["@components"]["navigation"]["items"],
+            response.json()["components"]["navigation"]["items"],
         )
 
     def test_actions_is_expandable(self):
         response = self.api_session.get("/folder")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("actions", list(response.json().get("@components")))
+        self.assertIn("actions", list(response.json().get("components")))
 
     def test_actions_expanded(self):
         response = self.api_session.get("/folder", params={"expand": "actions"})
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("object" in response.json()["@components"]["actions"])
-        self.assertTrue("object_buttons" in response.json()["@components"]["actions"])
-        self.assertTrue("portal_tabs" in response.json()["@components"]["actions"])
-        self.assertTrue("site_actions" in response.json()["@components"]["actions"])
-        self.assertTrue("user" in response.json()["@components"]["actions"])
+        self.assertTrue("object" in response.json()["components"]["actions"])
+        self.assertTrue("object_buttons" in response.json()["components"]["actions"])
+        self.assertTrue("portal_tabs" in response.json()["components"]["actions"])
+        self.assertTrue("site_actions" in response.json()["components"]["actions"])
+        self.assertTrue("user" in response.json()["components"]["actions"])
 
     def test_navigation_is_expandable(self):
         response = self.api_session.get("/folder")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("navigation", list(response.json().get("@components")))
+        self.assertIn("navigation", list(response.json().get("components")))
 
     def test_navigation_expanded(self):
         response = self.api_session.get("/folder", params={"expand": "navigation"})
@@ -231,7 +231,7 @@ class TestExpansionFunctional(unittest.TestCase):
                     "items": [],
                 },
             ],
-            response.json()["@components"]["navigation"]["items"],
+            response.json()["components"]["navigation"]["items"],
         )
 
     def test_navigation_expanded_with_depth(self):
@@ -261,14 +261,14 @@ class TestExpansionFunctional(unittest.TestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()["@components"]["navigation"]["items"]), 3)
+        self.assertEqual(len(response.json()["components"]["navigation"]["items"]), 3)
         self.assertEqual(
-            len(response.json()["@components"]["navigation"]["items"][1]["items"]),
+            len(response.json()["components"]["navigation"]["items"][1]["items"]),
             3,  # noqa
         )
         self.assertEqual(
             len(
-                response.json()["@components"]["navigation"]["items"][1]["items"][0][
+                response.json()["components"]["navigation"]["items"][1]["items"][0][
                     "items"
                 ]
             ),
@@ -279,7 +279,7 @@ class TestExpansionFunctional(unittest.TestCase):
         response = self.api_session.get("/folder")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("breadcrumbs", list(response.json().get("@components")))
+        self.assertIn("breadcrumbs", list(response.json().get("components")))
 
     def test_breadcrumbs_expanded(self):
         response = self.api_session.get("/folder", params={"expand": "breadcrumbs"})
@@ -291,14 +291,14 @@ class TestExpansionFunctional(unittest.TestCase):
                     "@id": self.portal_url + "/folder",
                 }
             ],
-            response.json()["@components"]["breadcrumbs"]["items"],
+            response.json()["components"]["breadcrumbs"]["items"],
         )
 
     def test_workflow_is_expandable(self):
         response = self.api_session.get("/folder")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("workflow", list(response.json().get("@components")))
+        self.assertIn("workflow", list(response.json().get("components")))
 
     def test_workflow_expanded(self):
         response = self.api_session.get("/folder", params={"expand": "workflow"})
@@ -306,17 +306,17 @@ class TestExpansionFunctional(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             self.portal_url + "/folder/@workflow",
-            response.json().get("@components").get("workflow").get("@id"),
+            response.json().get("components").get("workflow").get("@id"),
         )
         self.assertEqual(
             "private",
-            response.json()["@components"]["workflow"]["history"][0][
+            response.json()["components"]["workflow"]["history"][0][
                 "review_state"
             ],  # noqa
         )
         self.assertEqual(
             "Private",
-            response.json()["@components"]["workflow"]["history"][0]["title"],
+            response.json()["components"]["workflow"]["history"][0]["title"],
         )
         self.assertEqual(
             [
@@ -329,20 +329,20 @@ class TestExpansionFunctional(unittest.TestCase):
                     "title": "Submit for publication",
                 },
             ],
-            response.json()["@components"]["workflow"]["transitions"],
+            response.json()["components"]["workflow"]["transitions"],
         )
 
     def test_types_is_expandable(self):
         response = self.api_session.get("/folder")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("types", list(response.json().get("@components")))
+        self.assertIn("types", list(response.json().get("components")))
 
     def test_types_is_expandable_in_root(self):
         response = self.api_session.get("/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("types", list(response.json().get("@components")))
+        self.assertIn("types", list(response.json().get("components")))
 
     def test_types_expanded(self):
         response = self.api_session.get("/folder", params={"expand": "types"})
@@ -421,7 +421,7 @@ class TestExpansionFunctional(unittest.TestCase):
                     "id": "Document",
                 },
             ],
-            response.json().get("@components").get("types"),
+            response.json().get("components").get("types"),
         )
 
     def test_types_expanded_in_root(self):
@@ -501,7 +501,7 @@ class TestExpansionFunctional(unittest.TestCase):
                     "id": "Document",
                 },
             ],
-            response.json().get("@components").get("types"),
+            response.json().get("components").get("types"),
         )
 
 
@@ -540,7 +540,7 @@ class TestTranslationExpansionFunctional(unittest.TestCase):
         response = self.api_session.get("/en/test-document")
 
         self.assertEqual(response.status_code, 200)
-        self.assertIn("translations", list(response.json().get("@components")))
+        self.assertIn("translations", list(response.json().get("components")))
 
     def test_translations_expanded(self):
         response = self.api_session.get(
@@ -550,7 +550,7 @@ class TestTranslationExpansionFunctional(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         translation_dict = {"@id": self.es_content.absolute_url(), "language": "es"}
         self.assertIn(
-            translation_dict, response.json()["@components"]["translations"]["items"]
+            translation_dict, response.json()["components"]["translations"]["items"]
         )
 
     def test_expansions_no_fullobjects_do_not_modify_id(self):

@@ -208,7 +208,7 @@ class TestServiceInherit(unittest.TestCase):
         )
         self.assertEqual(
             "Inherited Value",
-            response.json()["@components"]["inherit"][
+            response.json()["components"]["inherit"][
                 "plone.testbehavior.ITestBehavior"
             ]["data"]["test_field"],
         )

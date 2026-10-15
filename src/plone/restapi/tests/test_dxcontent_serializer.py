@@ -198,8 +198,8 @@ class TestDXContentSerializer(unittest.TestCase):
             name="foo",
         )
         obj = self.serialize()
-        self.assertIn("foo", obj["@components"])
-        self.assertEqual("collapsed", obj["@components"]["foo"])
+        self.assertIn("foo", obj["components"])
+        self.assertEqual("collapsed", obj["components"]["foo"])
         gsm = getGlobalSiteManager()
         gsm.unregisterAdapter(
             ExpandableElementFoo,
@@ -216,7 +216,7 @@ class TestDXContentSerializer(unittest.TestCase):
             name="foo",
         )
         obj = self.serialize(include_expansion=False)
-        self.assertNotIn("@components", obj)
+        self.assertNotIn("components", obj)
         gsm = getGlobalSiteManager()
         gsm.unregisterAdapter(
             ExpandableElementFoo,

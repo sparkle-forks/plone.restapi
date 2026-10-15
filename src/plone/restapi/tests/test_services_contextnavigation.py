@@ -996,7 +996,7 @@ class TestServicesContextNavigation(unittest.TestCase):
         response = self.api_session.get("/folder1?expand=contextnavigation")
         res = response.json()
         self.assertTrue(
-            res["@components"]["contextnavigation"]["items"][0]["@id"].endswith(
+            res["components"]["contextnavigation"]["items"][0]["@id"].endswith(
                 "/plone/folder1/doc11",
             )
         )

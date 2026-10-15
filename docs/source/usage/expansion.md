@@ -30,7 +30,7 @@ The following is a list of components that support expansion.
 -   {doc}`types <../endpoints/types>`
 -   {doc}`workflow <../endpoints/workflow>`
 
-You can also get the list expandable components by inspecting the `@components` attribute in the response of any content `GET` request, as shown in the following example.
+You can also get the list expandable components by inspecting the `components` attribute in the response of any content `GET` request, as shown in the following example.
 
 ```http
 GET /plone/front-page HTTP/1.1
@@ -40,7 +40,7 @@ Authorization: Basic YWRtaW46c2VjcmV0
 {
   "@id": "http://localhost:55001/plone/front-page",
   "@type": "Document",
-  "@components": [
+  "components": [
     {
       "@id": "http://localhost:55001/plone/front-page/@actions"
     },
